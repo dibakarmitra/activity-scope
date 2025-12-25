@@ -111,7 +111,7 @@ class Activity extends Model
     protected static function booted(): void
     {
         static::addGlobalScope('with_relations', function (Builder $builder) {
-            $builder->withRelations();
+            $builder->with(['actor', 'subject']);
         });
     }
 
