@@ -1,0 +1,14 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    paths:
+        - src/
+
+    level: 5
+    reportUnmatchedIgnoredErrors: false
+
+    ignoreErrors:
+        - '#Trait Dibakar\\ActivityScope\\Traits\\.* is used zero times and is not analysed.#'
+
+    excludePaths:
