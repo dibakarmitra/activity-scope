@@ -98,12 +98,12 @@ class Activity extends Model
         return static::where('id', '<', 0);
     }
 
-    public function actor(): MorphTo|null
+    public function actor(): MorphTo
     {
         return $this->morphTo();
     }
 
-    public function subject(): MorphTo|null
+    public function subject(): MorphTo
     {
         return $this->morphTo();
     }
