@@ -47,7 +47,7 @@ class ComprehensiveActivityTest extends TestCase
     // ============================================
 
     /** @test */
-    public function it_uses_default_connection_from_config()
+    public function test_it_uses_default_connection_from_config()
     {
         Config::set('activityscope.database.connection', 'sqlite');
 
@@ -57,7 +57,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_uses_custom_connection_if_specified()
+    public function test_it_uses_custom_connection_if_specified()
     {
         $activity = activity()->connection('sqlite')->did('test')->log();
         // Since we only have sqlite setUp, this just verifies the method works without crashing
@@ -66,7 +66,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_uses_default_log_name_from_config()
+    public function test_it_uses_default_log_name_from_config()
     {
         Config::set('activityscope.default_log_name', 'system_log');
 
@@ -76,7 +76,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_overrides_default_log_name()
+    public function test_it_overrides_default_log_name()
     {
         $activity = activity()->name('audit')->did('test')->log();
 
@@ -88,7 +88,7 @@ class ComprehensiveActivityTest extends TestCase
     // ============================================
 
     /** @test */
-    public function it_can_be_run_silently_property()
+    public function test_it_can_be_run_silently_property()
     {
         $result = activity()->silent()->did('test')->log();
 
@@ -107,7 +107,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_supports_conditional_when_true()
+    public function test_it_supports_conditional_when_true()
     {
         activity()
             ->when(true, function ($builder) {
@@ -119,7 +119,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_supports_conditional_when_false()
+    public function test_it_supports_conditional_when_false()
     {
         activity()
             ->when(false, function ($builder) {
@@ -133,7 +133,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_supports_tap()
+    public function test_it_supports_tap()
     {
         activity()
             ->tap(function ($builder) {
@@ -149,7 +149,7 @@ class ComprehensiveActivityTest extends TestCase
     // ============================================
 
     /** @test */
-    public function it_resolves_actor_explicitly()
+    public function test_it_resolves_actor_explicitly()
     {
         activity()->by($this->user)->did('test')->log();
 
@@ -160,7 +160,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_resolves_system_actor()
+    public function test_it_resolves_system_actor()
     {
         $activity = activity()->bySystem()->did('test')->log();
 
@@ -169,7 +169,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_resolves_job_actor()
+    public function test_it_resolves_job_actor()
     {
         $activity = activity()->byJob('ImportUserJob')->did('test')->log();
 
@@ -177,7 +177,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_resolves_guest_actor()
+    public function test_it_resolves_guest_actor()
     {
         $activity = activity()->byGuest()->did('test')->log();
 
@@ -185,7 +185,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_if_actor_required_but_missing()
+    public function test_it_throws_if_actor_required_but_missing()
     {
         Config::set('activityscope.require_actor', true);
 
@@ -203,7 +203,7 @@ class ComprehensiveActivityTest extends TestCase
     // ============================================
 
     /** @test */
-    public function it_resolves_subject_explicitly()
+    public function test_it_resolves_subject_explicitly()
     {
         activity()->on($this->post)->did('test')->log();
 
@@ -214,7 +214,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_supports_alias_for_subject()
+    public function test_it_supports_alias_for_subject()
     {
         activity()->for($this->post)->did('test')->log();
 
@@ -224,7 +224,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_supports_manual_subject_label_and_id()
+    public function test_it_supports_manual_subject_label_and_id()
     {
         activity()->subject('CloudArchive')->subjectId(999)->did('archived')->log();
 
@@ -234,7 +234,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_handles_many_subjects_of_same_type()
+    public function test_it_handles_many_subjects_of_same_type()
     {
         $post2 = CompTestPost::create(['title' => 'Post 2']);
 
@@ -246,7 +246,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_ignores_non_model_in_on_many()
+    public function test_it_ignores_non_model_in_on_many()
     {
         activity()->onMany([$this->post, 'not-a-model'])->did('test')->log();
 
@@ -259,7 +259,7 @@ class ComprehensiveActivityTest extends TestCase
     // ============================================
 
     /** @test */
-    public function it_supports_common_actions()
+    public function test_it_supports_common_actions()
     {
         $actions = ['created', 'updated', 'deleted', 'restored', 'approved', 'rejected'];
 
@@ -270,7 +270,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_supports_security_action_shortcut()
+    public function test_it_supports_security_action_shortcut()
     {
         activity()->security('login_failed')->log();
 
@@ -278,7 +278,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_supports_explicit_action_method()
+    public function test_it_supports_explicit_action_method()
     {
         activity()->action('custom_event')->log();
 
@@ -290,14 +290,14 @@ class ComprehensiveActivityTest extends TestCase
     // ============================================
 
     /** @test */
-    public function it_supports_success_status()
+    public function test_it_supports_success_status()
     {
         activity()->success()->did('login')->log();
         $this->assertDatabaseHas('activities', ['status' => 'success']);
     }
 
     /** @test */
-    public function it_supports_failed_status_with_reason()
+    public function test_it_supports_failed_status_with_reason()
     {
         activity()->failed('bad_password')->did('login')->log();
         $this->assertDatabaseHas('activities', ['status' => 'failed']);
@@ -305,7 +305,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_supports_warning_status()
+    public function test_it_supports_warning_status()
     {
         activity()->warning('low_disk')->did('check')->log();
         $this->assertDatabaseHas('activities', ['status' => 'warning']);
@@ -313,7 +313,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_supports_info_status()
+    public function test_it_supports_info_status()
     {
         activity()->info('just_fyi')->did('notify')->log();
         $this->assertDatabaseHas('activities', ['status' => 'info']);
@@ -321,14 +321,14 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_sets_severity_string()
+    public function test_it_sets_severity_string()
     {
         activity()->severity('critical')->did('outage')->log();
         $this->assertEquals('critical', Activity::latest()->first()->meta['severity']);
     }
 
     /** @test */
-    public function it_sets_severity_integer()
+    public function test_it_sets_severity_integer()
     {
         activity()->severity(1)->did('incident')->log();
         $this->assertEquals(1, Activity::latest()->first()->meta['severity']);
@@ -339,7 +339,7 @@ class ComprehensiveActivityTest extends TestCase
     // ============================================
 
     /** @test */
-    public function it_merges_metadata_arrays()
+    public function test_it_merges_metadata_arrays()
     {
         activity()
             ->with(['meta_1' => 'val1'])
@@ -352,7 +352,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_overwrites_metadata_keys()
+    public function test_it_overwrites_metadata_keys()
     {
         activity()
             ->with(['meta_1' => 'initial'])
@@ -364,7 +364,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_captures_old_new_values()
+    public function test_it_captures_old_new_values()
     {
         activity()->oldNew('old_val', 'new_val')->did('update')->log();
 
@@ -374,7 +374,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_captures_changes_array()
+    public function test_it_captures_changes_array()
     {
         activity()->changes(['field' => 'changed'])->did('update')->log();
 
@@ -382,7 +382,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_handles_nested_metadata()
+    public function test_it_handles_nested_metadata()
     {
         activity()->with(['level1' => ['level2' => 'val']])->did('nested')->log();
 
@@ -390,7 +390,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_handles_null_values_in_metadata()
+    public function test_it_handles_null_values_in_metadata()
     {
         activity()->with(['empty' => null])->did('null_test')->log();
 
@@ -402,7 +402,7 @@ class ComprehensiveActivityTest extends TestCase
     // ============================================
 
     /** @test */
-    public function it_captures_request_context_when_enabled()
+    public function test_it_captures_request_context_when_enabled()
     {
         $request = \Illuminate\Http\Request::create('/api/test', 'POST', [], [], [], [
             'REMOTE_ADDR' => '10.0.0.1',
@@ -429,7 +429,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_ignores_ip_if_tracking_disabled()
+    public function test_it_ignores_ip_if_tracking_disabled()
     {
         Config::set('activityscope.privacy.track_ip_address', false);
 
@@ -439,7 +439,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_overrides_request_context_manually()
+    public function test_it_overrides_request_context_manually()
     {
         activity()
             ->ip('1.1.1.1')
@@ -461,14 +461,14 @@ class ComprehensiveActivityTest extends TestCase
     // ============================================
 
     /** @test */
-    public function it_flags_activity_as_private()
+    public function test_it_flags_activity_as_private()
     {
         activity()->private()->did('secret')->log();
         $this->assertTrue(Activity::latest()->first()->meta['private']);
     }
 
     /** @test */
-    public function it_flags_activity_as_public()
+    public function test_it_flags_activity_as_public()
     {
         // First set private, then public to ensure it unsets
         activity()->private()->public()->did('public')->log();
@@ -476,28 +476,28 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_flags_activity_as_sensitive()
+    public function test_it_flags_activity_as_sensitive()
     {
         activity()->sensitive()->did('danger')->log();
         $this->assertTrue(Activity::latest()->first()->meta['sensitive']);
     }
 
     /** @test */
-    public function it_stores_tags_as_array()
+    public function test_it_stores_tags_as_array()
     {
         activity()->tags(['auth', 'security'])->did('tagged')->log();
         $this->assertEquals(['auth', 'security'], Activity::latest()->first()->meta['tags']);
     }
 
     /** @test */
-    public function it_converts_single_tag_to_array()
+    public function test_it_converts_single_tag_to_array()
     {
         activity()->tags('single_tag')->did('tagged')->log();
         $this->assertEquals(['single_tag'], Activity::latest()->first()->meta['tags']);
     }
 
     /** @test */
-    public function it_sets_category()
+    public function test_it_sets_category()
     {
         activity()->category('audit')->did('categorized')->log();
         $this->assertEquals('audit', Activity::latest()->first()->category);
@@ -508,7 +508,7 @@ class ComprehensiveActivityTest extends TestCase
     // ============================================
 
     /** @test */
-    public function it_supports_custom_past_timestamps()
+    public function test_it_supports_custom_past_timestamps()
     {
         $past = now()->subYear();
         activity()->at($past)->did('history')->log();
@@ -516,7 +516,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_supports_custom_future_timestamps()
+    public function test_it_supports_custom_future_timestamps()
     {
         $future = now()->addYear();
         activity()->at($future)->did('prediction')->log();
@@ -524,21 +524,21 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_supports_correlation_id()
+    public function test_it_supports_correlation_id()
     {
         activity()->correlationId('corr-123')->did('corr')->log();
         $this->assertEquals('corr-123', Activity::latest()->first()->meta['correlation_id']);
     }
 
     /** @test */
-    public function it_supports_request_id()
+    public function test_it_supports_request_id()
     {
         activity()->requestId('req-abc')->did('req')->log();
         $this->assertEquals('req-abc', Activity::latest()->first()->meta['request_id']);
     }
 
     /** @test */
-    public function it_supports_external_reference()
+    public function test_it_supports_external_reference()
     {
         activity()->externalRef('ext-xyz')->did('ext')->log();
         $this->assertEquals('ext-xyz', Activity::latest()->first()->meta['external_ref']);
@@ -549,7 +549,7 @@ class ComprehensiveActivityTest extends TestCase
     // ============================================
 
     /** @test */
-    public function it_throws_if_action_is_missing()
+    public function test_it_throws_if_action_is_missing()
     {
         $this->expectException(ActivityException::class);
         $this->expectExceptionMessage('Activity action is required');
@@ -558,7 +558,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_validates_payload_size_limit()
+    public function test_it_validates_payload_size_limit()
     {
         $largeData = str_repeat('a', 66000); // Exceeds 65535
 
@@ -569,13 +569,13 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_logs_error_without_throwing_if_configured()
+    public function test_it_logs_error_without_throwing_if_configured()
     {
         $this->markTestSkipped('Recursion test causes hang in this environment');
     }
 
     /** @test */
-    public function it_throws_error_if_configured()
+    public function test_it_throws_error_if_configured()
     {
         $this->markTestSkipped('Recursion test causes hang in this environment');
     }
@@ -585,14 +585,14 @@ class ComprehensiveActivityTest extends TestCase
     // ============================================
 
     /** @test */
-    public function it_handles_empty_string_action()
+    public function test_it_handles_empty_string_action()
     {
         $this->expectException(ActivityException::class);
         activity()->did('')->log();
     }
 
     /** @test */
-    public function it_handles_zero_integer_as_metadata()
+    public function test_it_handles_zero_integer_as_metadata()
     {
         activity()->with(['count' => 0])->did('zero_test')->log();
         $this->assertEquals(0, Activity::latest()->first()->meta['count']);
@@ -600,14 +600,14 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_handles_boolean_false_as_metadata()
+    public function test_it_handles_boolean_false_as_metadata()
     {
         activity()->with(['is_active' => false])->did('bool_test')->log();
         $this->assertFalse(Activity::latest()->first()->meta['is_active']);
     }
 
     /** @test */
-    public function it_chains_multiple_meta_calls_correctly()
+    public function test_it_chains_multiple_meta_calls_correctly()
     {
         activity()
             ->with(['a' => 1])
@@ -623,7 +623,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_supports_fluent_tap_modification()
+    public function test_it_supports_fluent_tap_modification()
     {
         activity()
             ->did('original')
@@ -636,7 +636,7 @@ class ComprehensiveActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_keeps_actor_when_using_tap()
+    public function test_it_keeps_actor_when_using_tap()
     {
         activity()
             ->by($this->user)

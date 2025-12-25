@@ -36,7 +36,7 @@ class ActivityModelScopeTest extends TestCase
     }
 
     /** @test */
-    public function it_eager_loads_relations_by_default()
+    public function test_it_eager_loads_relations_by_default()
     {
         $user = new ScopeTestUser();
         $user->name = 'Test Actor';
@@ -55,7 +55,7 @@ class ActivityModelScopeTest extends TestCase
     }
 
     /** @test */
-    public function it_filters_by_actor()
+    public function test_it_filters_by_actor()
     {
         $user1 = new ScopeTestUser();
         $user1->name = 'U1';
@@ -73,7 +73,7 @@ class ActivityModelScopeTest extends TestCase
     }
 
     /** @test */
-    public function it_filters_by_subject()
+    public function test_it_filters_by_subject()
     {
         $post1 = new ScopeTestPost();
         $post1->title = 'P1';
@@ -87,7 +87,7 @@ class ActivityModelScopeTest extends TestCase
     }
 
     /** @test */
-    public function it_filters_by_action()
+    public function test_it_filters_by_action()
     {
         activity()->did('login')->log();
         activity()->did('logout')->log();
@@ -97,7 +97,7 @@ class ActivityModelScopeTest extends TestCase
     }
 
     /** @test */
-    public function it_filters_change_dates()
+    public function test_it_filters_change_dates()
     {
         activity()->did('past')->at(now()->subDays(5))->log();
         activity()->did('recent')->at(now())->log();
@@ -109,7 +109,7 @@ class ActivityModelScopeTest extends TestCase
     }
 
     /** @test */
-    public function it_filters_by_log_name()
+    public function test_it_filters_by_log_name()
     {
         activity()->name('system')->on(new ScopeTestPost())->did('booted')->log();
         activity()->name('auth')->on(new ScopeTestPost())->did('login')->log();
@@ -124,7 +124,7 @@ class ActivityModelScopeTest extends TestCase
     }
 
     /** @test */
-    public function it_filters_by_property()
+    public function test_it_filters_by_property()
     {
         $post = new ScopeTestPost();
         $post->title = 'Test Title'; // Fix: Add required title

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Config;
 class DataSanitizerTest extends TestCase
 {
     /** @test */
-    public function it_sanitizes_nested_arrays()
+    public function test_it_sanitizes_nested_arrays()
     {
         Config::set('activityscope.privacy.sensitive_fields', ['secret']);
 
@@ -33,7 +33,7 @@ class DataSanitizerTest extends TestCase
     }
 
     /** @test */
-    public function it_masks_secret_looking_strings()
+    public function test_it_masks_secret_looking_strings()
     {
         $sanitizer = new DataSanitizer();
         $secret = 'sk_test_4eC39HqLyjWDarjtT1zdp7dc';
@@ -58,7 +58,7 @@ class DataSanitizerTest extends TestCase
     }
 
     /** @test */
-    public function it_respects_hide_sensitive_config()
+    public function test_it_respects_hide_sensitive_config()
     {
         Config::set('activityscope.privacy.hide_sensitive', false);
 
@@ -69,7 +69,7 @@ class DataSanitizerTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_input_if_not_array()
+    public function test_it_returns_input_if_not_array()
     {
         $sanitizer = new DataSanitizer();
         $this->assertEquals('string', $sanitizer->sanitize('string'));

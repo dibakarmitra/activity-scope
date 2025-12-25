@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Config;
 class ActorResolverTest extends TestCase
 {
     /** @test */
-    public function it_returns_null_if_auto_resolve_is_disabled()
+    public function test_it_returns_null_if_auto_resolve_is_disabled()
     {
         Config::set('activityscope.actor.auto_resolve', false);
 
@@ -24,7 +24,7 @@ class ActorResolverTest extends TestCase
     }
 
     /** @test */
-    public function it_resolves_authenticated_user()
+    public function test_it_resolves_authenticated_user()
     {
         $user = Mockery::mock(Authenticatable::class);
 
@@ -37,7 +37,7 @@ class ActorResolverTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_null_if_no_user_and_no_system_actor_configured()
+    public function test_it_returns_null_if_no_user_and_no_system_actor_configured()
     {
         Config::set('activityscope.actor.require_system_actor', false);
 

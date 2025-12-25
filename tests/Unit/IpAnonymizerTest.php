@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Config;
 class IpAnonymizerTest extends TestCase
 {
     /** @test */
-    public function it_returns_null_for_invalid_ips()
+    public function test_it_returns_null_for_invalid_ips()
     {
         $anonymizer = new IpAnonymizer();
         $this->assertNull($anonymizer->anonymize('not-an-ip'));
@@ -17,7 +17,7 @@ class IpAnonymizerTest extends TestCase
     }
 
     /** @test */
-    public function it_anonymizes_ipv4_with_default_mask()
+    public function test_it_anonymizes_ipv4_with_default_mask()
     {
         Config::set('activityscope.ipv4_mask', 24);
 
@@ -29,7 +29,7 @@ class IpAnonymizerTest extends TestCase
     }
 
     /** @test */
-    public function it_anonymizes_ipv4_with_custom_mask()
+    public function test_it_anonymizes_ipv4_with_custom_mask()
     {
         Config::set('activityscope.ipv4_mask', 16);
 
@@ -41,7 +41,7 @@ class IpAnonymizerTest extends TestCase
     }
 
     /** @test */
-    public function it_anonymizes_ipv6_with_default_mask()
+    public function test_it_anonymizes_ipv6_with_default_mask()
     {
         Config::set('activityscope.ipv6_mask', 48);
 
@@ -55,7 +55,7 @@ class IpAnonymizerTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_original_ip_if_mask_too_large()
+    public function test_it_returns_original_ip_if_mask_too_large()
     {
         Config::set('activityscope.ipv4_mask', 32);
 
